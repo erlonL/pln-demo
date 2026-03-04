@@ -1,0 +1,12 @@
+{
+  "labels": [
+    { "name": "Neutral", "color": "#6B7280", "meaning": "No strong persuasion technique detected. Straightforward informational content." },
+    { "name": "Appeal to Emotion", "color": "#F59E0B", "meaning": "Uses emotional language or stories to sway the audience rather than facts or logic." },
+    { "name": "Fear Mongering", "color": "#EF4444", "meaning": "Exaggerates threats or dangers to provoke fear and manipulate decision-making." },
+    { "name": "Loaded Language", "color": "#8B5CF6", "meaning": "Uses words with strong connotations to influence perception beyond their literal meaning." },
+    { "name": "False Dichotomy", "color": "#EC4899", "meaning": "Presents only two options when more exist, forcing a binary choice." },
+    { "name": "Ad Hominem", "color": "#F97316", "meaning": "Attacks the person making an argument rather than addressing the argument itself." },
+    { "name": "Appeal to Authority", "color": "#3B82F6", "meaning": "Cites an authority figure to support a claim, sometimes without relevant expertise." },
+    { "name": "Bandwagon", "color": "#10B981", "meaning": "Encourages agreement by suggesting 'everyone' supports this position or action." }
+  ]
+}

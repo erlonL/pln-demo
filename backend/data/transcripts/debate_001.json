@@ -1,0 +1,23 @@
+{
+  "video_id": "debate_001",
+  "segments": [
+    { "start_time": 0, "end_time": 8, "text": "Good evening. Tonight we address the most pressing issues facing our nation, and I intend to speak plainly about the facts.", "label": "Neutral" },
+    { "start_time": 8, "end_time": 18, "text": "My opponent wants you to believe everything is fine. But think about your family, your children — are they truly safe in today's world?", "label": "Appeal to Emotion" },
+    { "start_time": 18, "end_time": 28, "text": "Crime rates in border communities have surged to historic levels. Your neighborhood could be next. This is not a drill.", "label": "Fear Mongering" },
+    { "start_time": 28, "end_time": 40, "text": "Let me be clear about the economic numbers: GDP growth last quarter was 2.3%, unemployment stands at 3.8%, and inflation has moderated significantly.", "label": "Neutral" },
+    { "start_time": 40, "end_time": 52, "text": "The radical left's reckless spending spree has decimated the middle class and set our country on a path to destruction.", "label": "Loaded Language" },
+    { "start_time": 52, "end_time": 62, "text": "You're either with hardworking Americans, or you're with those who want to tear this country down. There is no middle ground.", "label": "False Dichotomy" },
+    { "start_time": 62, "end_time": 74, "text": "Former Treasury Secretary Williams — a Nobel laureate — has endorsed our economic plan, calling it the most comprehensive he's seen in decades.", "label": "Appeal to Authority" },
+    { "start_time": 74, "end_time": 86, "text": "My opponent's personal history of failed businesses speaks for itself. How can someone who can't manage a small company manage an entire nation?", "label": "Ad Hominem" },
+    { "start_time": 86, "end_time": 98, "text": "Polls show that 73% of Americans agree with our stance on border security. Join the majority who understand what's truly at stake.", "label": "Bandwagon" },
+    { "start_time": 98, "end_time": 112, "text": "Healthcare access is a genuine challenge. Our plan proposes expanding clinic networks in underserved rural areas through public-private partnerships.", "label": "Neutral" },
+    { "start_time": 112, "end_time": 124, "text": "Imagine waking up one day and finding out you can't afford life-saving medication for your child. That's the reality millions face — and my opponent ignores it.", "label": "Appeal to Emotion" },
+    { "start_time": 124, "end_time": 136, "text": "If we allow unchecked immigration, diseases that were eradicated decades ago will return and overwhelm our hospitals. The evidence is clear.", "label": "Fear Mongering" },
+    { "start_time": 136, "end_time": 148, "text": "Our climate agenda will unleash a green revolution — creating millions of jobs and positioning America as the dominant force in clean energy.", "label": "Loaded Language" },
+    { "start_time": 148, "end_time": 160, "text": "The scientific consensus on climate change is well established. The IPCC reports document measurable increases in global average temperatures.", "label": "Neutral" },
+    { "start_time": 160, "end_time": 172, "text": "Either we act boldly on climate now, or we condemn our grandchildren to a scorched and unlivable Earth. The choice is yours.", "label": "False Dichotomy" },
+    { "start_time": 172, "end_time": 184, "text": "Professor Chen from MIT — who has spent 30 years studying energy systems — confirmed that our renewable transition plan is technically sound.", "label": "Appeal to Authority" },
+    { "start_time": 184, "end_time": 196, "text": "Millions of citizens have already signed on to our movement. Every day more people realize that the old guard has failed them.", "label": "Bandwagon" },
+    { "start_time": 196, "end_time": 210, "text": "In conclusion, the path forward requires honest dialogue, evidence-based policy, and a commitment to the common good above partisan interests.", "label": "Neutral" }
+  ]
+}

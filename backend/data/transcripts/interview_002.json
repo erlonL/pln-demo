@@ -1,0 +1,21 @@
+{
+  "video_id": "interview_002",
+  "segments": [
+    { "start_time": 0, "end_time": 10, "text": "Welcome back. Today we're discussing the proposed education reform bill with our guest.", "label": "Neutral" },
+    { "start_time": 10, "end_time": 22, "text": "Every child deserves a chance to succeed. When I visit schools and see kids without basic supplies, it breaks my heart.", "label": "Appeal to Emotion" },
+    { "start_time": 22, "end_time": 34, "text": "If this bill fails, an entire generation of children will be left behind, unable to compete in the global economy.", "label": "Fear Mongering" },
+    { "start_time": 34, "end_time": 46, "text": "Current standardized test scores show a 12-point gap between high and low income districts, a trend that has persisted for two decades.", "label": "Neutral" },
+    { "start_time": 46, "end_time": 58, "text": "The education establishment's stranglehold on our children's futures must be broken by bold, patriotic reform.", "label": "Loaded Language" },
+    { "start_time": 58, "end_time": 70, "text": "You're either investing in America's future, or you're voting to keep the corrupt status quo. Pick a side.", "label": "False Dichotomy" },
+    { "start_time": 70, "end_time": 82, "text": "Dr. Huang, who chaired the National Education Commission, reviewed our proposal and gave it her full endorsement.", "label": "Appeal to Authority" },
+    { "start_time": 82, "end_time": 96, "text": "Parents across the country are rallying behind this bill. Thousands show up to town halls demanding change. You can't ignore that momentum.", "label": "Bandwagon" },
+    { "start_time": 96, "end_time": 108, "text": "Teacher training programs vary widely in quality. Our proposal sets a national baseline while preserving state flexibility.", "label": "Neutral" },
+    { "start_time": 108, "end_time": 120, "text": "Think of the teachers spending their own money on classroom supplies, working nights and weekends because they love these kids.", "label": "Appeal to Emotion" },
+    { "start_time": 120, "end_time": 134, "text": "Without federal oversight, predatory charter operators will swoop in and siphon public funds while delivering nothing for students.", "label": "Fear Mongering" },
+    { "start_time": 134, "end_time": 148, "text": "The radical voucher scheme is nothing more than a Trojan horse to dismantle the public education system brick by brick.", "label": "Loaded Language" },
+    { "start_time": 148, "end_time": 160, "text": "Budget allocation data shows per-pupil spending ranges from $8,000 to $24,000 across districts — a significant funding disparity.", "label": "Neutral" },
+    { "start_time": 160, "end_time": 172, "text": "The opposing side has no real solutions. Their own legislative record shows zero meaningful education bills passed in ten years.", "label": "Ad Hominem" },
+    { "start_time": 172, "end_time": 184, "text": "Educators, parents, economists — experts from every field agree this reform is long overdue. The evidence is overwhelming.", "label": "Appeal to Authority" },
+    { "start_time": 184, "end_time": 196, "text": "Join the millions demanding better schools. Be part of the solution, not part of the problem.", "label": "Bandwagon" }
+  ]
+}

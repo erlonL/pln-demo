@@ -12,7 +12,8 @@
       <!-- Form Section -->
       <main class="analyse-form">
         <div class="form-header">
-          <h1 class="form-title">New Analysis</h1>
+          <div class="section-label">— New Analysis</div>
+          <h1 class="form-title">Create Analysis</h1>
           <p class="form-description">Upload a video or paste text to analyze for rhetorical devices</p>
         </div>
 
@@ -25,10 +26,13 @@
             <span class="tab-icon">T</span>
             <span>Text</span>
           </button>
+          <!-- FEATURE FLAG: VIDEO MODE DISABLED - Change enableVideoMode to true to enable -->
           <button 
             class="tab-btn"
-            :class="{ active: inputMode === 'video' }"
+            :class="{ active: inputMode === 'video', disabled: !enableVideoMode }"
             @click="inputMode = 'video'"
+            :disabled="!enableVideoMode"
+            :title="!enableVideoMode ? 'Video analysis coming soon' : 'Analyze video content'"
           >
             <span class="tab-icon">▶</span>
             <span>Video</span>
@@ -119,10 +123,7 @@
               <div class="stat-label">{{ stat.label }}</div>
               <div class="stat-count">{{ stat.count }}</div>
               <div class="stat-percentage">{{ stat.percentage }}%</div>
-              <div 
-                class="stat-bar"
-                :style="{ width: stat.percentage + '%' }"
-              ></div>
+              <div class="stat-bar" :style="{ width: stat.percentage + '%' }"></div>
             </div>
           </div>
 
@@ -130,19 +131,13 @@
           <div class="segments-block">
             <h3 class="block-title">Detected Segments</h3>
             <div v-if="results.results.length === 0" class="no-segments">
-              No rhetorical devices detected.
+              No segments detected in this content.
             </div>
             <div v-else class="segments-list">
-              <div 
-                class="segment-item"
-                v-for="(result, idx) in results.results"
-                :key="idx"
-              >
+              <div v-for="(seg, i) in results.results" :key="i" class="segment-item">
                 <div class="segment-content">
-                  <p class="segment-text">{{ result.sentence }}</p>
-                  <span class="segment-label" :data-label="result.label">
-                    {{ result.label }}
-                  </span>
+                  <p class="segment-text">{{ seg.text }}</p>
+                  <span class="segment-label" :data-label="seg.label">{{ seg.label }}</span>
                 </div>
               </div>
             </div>
@@ -156,6 +151,14 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { RouterLink } from 'vue-router'
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// 🎯 FEATURE FLAG: VIDEO MODE
+// ═══════════════════════════════════════════════════════════════════════════════
+// Change this to `true` to enable video upload tab
+// Change this to `false` to disable video upload tab
+const enableVideoMode = false
+// ═══════════════════════════════════════════════════════════════════════════════
 
 const inputMode = ref('text')
 const textInput = ref('')
@@ -254,21 +257,28 @@ const analyzeContent = async () => {
 }
 
 .back-btn {
-  font-size: 14px;
+  font-family: var(--font-mono);
+  font-size: 12px;
   color: var(--text2);
-  transition: color 0.2s ease;
+  padding: 6px 12px;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+  text-decoration: none;
+  display: inline-block;
 }
 
 .back-btn:hover {
-  color: var(--text);
+  color: #ff3333;
+  border-color: #ff3333;
+  background: rgba(255, 51, 51, 0.1);
 }
 
 .topbar-title {
   display: flex;
   align-items: center;
   gap: 12px;
-  flex: 1;
-  margin-left: 40px;
+  margin-left: auto;
 }
 
 .logo-sm {
@@ -277,12 +287,13 @@ const analyzeContent = async () => {
   justify-content: center;
   width: 32px;
   height: 32px;
-  background: var(--accent);
-  color: var(--bg);
+  background: #ff3333;
+  color: white;
   border-radius: var(--radius);
   font-weight: 600;
   font-size: 12px;
   font-family: var(--font-display);
+  letter-spacing: 0.5px;
 }
 
 .topbar-name {
@@ -290,6 +301,7 @@ const analyzeContent = async () => {
   font-weight: 600;
   color: var(--text);
   margin: 0;
+  font-family: var(--font-display);
 }
 
 .page-body {
@@ -311,13 +323,22 @@ const analyzeContent = async () => {
 }
 
 .form-header {
-  margin-bottom: 16px;
+  margin-bottom: 24px;
+}
+
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text3);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
 }
 
 .form-title {
   font-size: 28px;
   font-weight: 700;
-  color: var(--text);
+  color: #ff3333;
   margin: 0 0 8px 0;
   font-family: var(--font-display);
 }
@@ -353,12 +374,21 @@ const analyzeContent = async () => {
 }
 
 .tab-btn.active {
-  color: var(--accent);
-  border-bottom-color: var(--accent);
+  color: #ff3333;
+  border-bottom-color: #ff3333;
 }
 
-.tab-btn:hover:not(.active) {
+.tab-btn:hover:not(.active):not(:disabled) {
   color: var(--text);
+}
+
+.tab-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.tab-btn.disabled {
+  opacity: 0.5;
 }
 
 .tab-icon {
@@ -369,6 +399,15 @@ const analyzeContent = async () => {
   height: 20px;
   font-size: 12px;
   font-weight: 600;
+}
+
+.coming-soon {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text3);
+  margin-left: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 /* Input Section */
@@ -391,6 +430,7 @@ const analyzeContent = async () => {
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin-bottom: 4px;
+  font-family: var(--font-mono);
 }
 
 /* Text Input */
@@ -410,8 +450,8 @@ const analyzeContent = async () => {
 
 .text-input:focus {
   outline: none;
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(124, 106, 255, 0.1);
+  border-color: #ff3333;
+  box-shadow: 0 0 0 3px rgba(255, 51, 51, 0.15);
 }
 
 .text-input:disabled {
@@ -423,6 +463,7 @@ const analyzeContent = async () => {
   font-size: 12px;
   color: var(--text3);
   text-align: right;
+  font-family: var(--font-mono);
 }
 
 /* File Upload */
@@ -437,13 +478,13 @@ const analyzeContent = async () => {
 }
 
 .file-upload:hover {
-  border-color: var(--accent);
+  border-color: #ff3333;
   background: var(--surface3);
 }
 
 .file-upload.drag-over {
-  border-color: var(--accent);
-  background: rgba(124, 106, 255, 0.1);
+  border-color: #ff3333;
+  background: rgba(255, 51, 51, 0.1);
   transform: scale(1.01);
 }
 
@@ -473,6 +514,7 @@ const analyzeContent = async () => {
 .upload-hint {
   font-size: 13px;
   color: var(--text3);
+  font-family: var(--font-mono);
 }
 
 .file-selected {
@@ -535,7 +577,7 @@ const analyzeContent = async () => {
 /* Analyze Button */
 .analyze-btn {
   padding: 12px 24px;
-  background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+  background: linear-gradient(135deg, #ff3333 0%, #cc0000 100%);
   color: white;
   border: none;
   border-radius: var(--radius-lg);
@@ -551,7 +593,7 @@ const analyzeContent = async () => {
 }
 
 .analyze-btn:hover:not(:disabled) {
-  box-shadow: 0 8px 20px rgba(124, 106, 255, 0.4);
+  box-shadow: 0 8px 20px rgba(255, 51, 51, 0.3);
   transform: translateY(-2px);
 }
 
@@ -583,6 +625,7 @@ const analyzeContent = async () => {
   font-size: 13px;
   margin: 0;
   animation: slide-in-down 0.3s ease;
+  font-family: var(--font-mono);
 }
 
 @keyframes slide-in-down {
@@ -678,6 +721,7 @@ const analyzeContent = async () => {
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin: 0 0 12px 0;
+  font-family: var(--font-mono);
 }
 
 .original-text {
@@ -693,7 +737,7 @@ const analyzeContent = async () => {
 }
 
 .original-text:hover {
-  border-color: var(--accent);
+  border-color: #ff3333;
   background: var(--surface3);
 }
 
@@ -717,10 +761,10 @@ const analyzeContent = async () => {
 }
 
 .stat-card:hover {
-  border-color: var(--accent);
+  border-color: #ff3333;
   background: var(--surface3);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 12px rgba(255, 51, 51, 0.15);
 }
 
 .stat-label {
@@ -730,12 +774,13 @@ const analyzeContent = async () => {
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin-bottom: 8px;
+  font-family: var(--font-mono);
 }
 
 .stat-count {
   font-size: 28px;
   font-weight: 700;
-  color: var(--accent);
+  color: #ff3333;
   font-family: var(--font-mono);
   margin-bottom: 4px;
 }
@@ -744,11 +789,12 @@ const analyzeContent = async () => {
   font-size: 12px;
   color: var(--text3);
   margin-bottom: 8px;
+  font-family: var(--font-mono);
 }
 
 .stat-bar {
   height: 4px;
-  background: var(--accent);
+  background: #ff3333;
   border-radius: 2px;
   transition: width 0.4s ease;
 }
@@ -793,7 +839,7 @@ const analyzeContent = async () => {
 .segment-item:nth-child(n+5) { animation-delay: 0.49s; }
 
 .segment-item:hover {
-  border-color: var(--accent);
+  border-color: #ff3333;
   background: var(--surface3);
   transform: translateX(4px);
 }
@@ -824,26 +870,28 @@ const analyzeContent = async () => {
   letter-spacing: 0.5px;
   white-space: nowrap;
   transition: all 0.2s ease;
+  font-family: var(--font-mono);
 }
 
-.segment-label[data-label] {
-  background: var(--surface3);
-  color: var(--text2);
-  border: 1px solid var(--border);
-}
-
-/* Enhanced label styling with colors */
 .segment-item:hover .segment-label {
   transform: scale(1.05);
 }
 
 @media (max-width: 768px) {
+  .topbar {
+    padding: 16px 20px;
+  }
+
   .page-body {
-    padding: 32px 24px;
+    padding: 32px 20px;
   }
 
   .form-title {
     font-size: 24px;
+  }
+
+  .form-description {
+    font-size: 13px;
   }
 
   .stats-grid {

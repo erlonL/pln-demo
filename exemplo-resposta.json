@@ -1,0 +1,16 @@
+{
+    "original_text": "This represents a text that a model will classify. It certainly has all the labels we want to predict, but it is not a real sentence. It is just a placeholder to test the model's ability to classify text based on the labels we have defined.",
+    "results": [
+        {
+            "sentence": "This represents a text that a model will classify.",
+            "label": "Loaded_Language"
+        }
+    ],
+    "label_counts": [
+        {
+            "label": "Loaded_Language",
+            "count": 1,
+            "percentage": 100
+        }
+    ]
+}

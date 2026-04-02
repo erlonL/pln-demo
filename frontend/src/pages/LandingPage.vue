@@ -20,6 +20,18 @@
 
     <!-- Content below banner - seamlessly integrated -->
     <div class="landing-content">
+      <section class="new-analysis-section">
+        <div class="section-label">— Create</div>
+        <RouterLink to="/analyse" class="new-analysis-card">
+          <div class="analysis-icon">+</div>
+          <div class="analysis-text">
+            <h3 class="analysis-title">Começar nova análise</h3>
+            <p class="analysis-desc"></p>
+          </div>
+          <div class="analysis-arrow">→</div>
+        </RouterLink>
+      </section>
+
       <section class="videos-section">
         <div class="section-label">— Available Analyses</div>
         
@@ -146,6 +158,95 @@ onMounted(async () => {
   display: flex;
   align-items: center;
   padding: 60px 32px;
+}
+
+/* New Analysis Section */
+.new-analysis-section {
+  margin-bottom: 60px;
+}
+
+.new-analysis-card {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 32px;
+  background: linear-gradient(135deg, rgba(255, 51, 51, 0.1) 0%, rgba(255, 51, 51, 0.05) 100%);
+  border: 2px solid #ff3333;
+  border-radius: var(--radius-lg);
+  transition: all 0.3s ease;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.new-analysis-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 30% 30%, rgba(255, 51, 51, 0.15) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.new-analysis-card:hover {
+  background: linear-gradient(135deg, rgba(255, 51, 51, 0.2) 0%, rgba(255, 51, 51, 0.1) 100%);
+  border-color: rgba(255, 51, 51, 0.8);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(255, 51, 51, 0.2);
+}
+
+.analysis-icon {
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius);
+  background: rgba(255, 51, 51, 0.15);
+  border: 2px solid #ff3333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: 900;
+  color: #ff3333;
+  transition: all 0.3s ease;
+}
+
+.new-analysis-card:hover .analysis-icon {
+  background: #ff3333;
+  color: white;
+  transform: scale(1.1);
+}
+
+.analysis-text {
+  flex: 1;
+  position: relative;
+  z-index: 1;
+}
+
+.analysis-title {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 6px 0;
+  letter-spacing: -0.5px;
+}
+
+.analysis-desc {
+  font-size: 14px;
+  color: var(--text2);
+  margin: 0;
+  line-height: 1.3;
+}
+
+.analysis-arrow {
+  font-size: 20px;
+  color: #ff3333;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.new-analysis-card:hover .analysis-arrow {
+  transform: translateX(4px);
 }
 
 .hero-text {

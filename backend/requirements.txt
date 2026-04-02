@@ -3,3 +3,7 @@ uvicorn
 pydantic
 python-multipart
 aiofiles
+transformers
+nltk
+torch
+numpy>=1.21.0

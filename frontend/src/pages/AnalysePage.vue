@@ -2,17 +2,12 @@
   <div class="analyse-page">
     <nav class="topbar">
       <RouterLink to="/" class="back-btn">← Voltar</RouterLink>
-      <div class="topbar-title">
-        <span class="logo-sm">PD</span>
-        <h2 class="topbar-name">Análise</h2>
-      </div>
     </nav>
 
     <div class="page-body">
       <!-- Form Section -->
       <main class="analyse-form">
         <div class="form-header">
-          <div class="section-label">— Nova Análise</div>
           <h1 class="form-title">Criar Análise</h1>
           <p class="form-description">Envie um vídeo ou cole um texto para analisar discursos</p>
         </div>

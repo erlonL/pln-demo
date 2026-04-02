@@ -21,7 +21,6 @@
     <!-- Content below banner - seamlessly integrated -->
     <div class="landing-content">
       <section class="new-analysis-section">
-        <div class="section-label">— Criar</div>
         <RouterLink to="/analyse" class="new-analysis-card">
           <div class="analysis-icon">+</div>
           <div class="analysis-text">
@@ -32,7 +31,8 @@
         </RouterLink>
       </section>
 
-      <section class="videos-section">
+      <!-- FEATURE FLAG: VIDEOS SECTION DISABLED - Change enableVideosSection to true to enable -->
+      <section class="videos-section" v-if="enableVideosSection">
         <div class="section-label">— Análises Disponíveis</div>
         
         <div v-if="loading" class="state-msg">
@@ -289,7 +289,7 @@ onMounted(async () => {
   position: relative;
   z-index: 3;
   width: 100%;
-  padding: 60px 32px 60px;
+  padding: -60px 32px 60px;
   background: #0a0a0a;
 }
 

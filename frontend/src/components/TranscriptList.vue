@@ -1,7 +1,7 @@
 <template>
   <div class="transcript-list" ref="listEl" role="list">
     <div v-if="!segments.length" class="empty-state">
-      <span>No segments to display.</span>
+      <span>Nenhum segmento para exibir.</span>
     </div>
     <template v-for="(seg, i) in segments" :key="seg.start_time">
       <SegmentRow

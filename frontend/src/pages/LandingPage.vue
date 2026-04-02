@@ -21,7 +21,7 @@
     <!-- Content below banner - seamlessly integrated -->
     <div class="landing-content">
       <section class="new-analysis-section">
-        <div class="section-label">— Create</div>
+        <div class="section-label">— Criar</div>
         <RouterLink to="/analyse" class="new-analysis-card">
           <div class="analysis-icon">+</div>
           <div class="analysis-text">
@@ -33,13 +33,13 @@
       </section>
 
       <section class="videos-section">
-        <div class="section-label">— Available Analyses</div>
+        <div class="section-label">— Análises Disponíveis</div>
         
         <div v-if="loading" class="state-msg">
-          <span class="pulse">Loading...</span>
+          <span class="pulse">Carregando...</span>
         </div>
         <div v-else-if="!videoStore.videos.length" class="state-msg empty">
-          No video analyses found.
+          Nenhuma análise de vídeo encontrada.
         </div>
         <ul v-else class="video-list">
           <li
@@ -51,7 +51,7 @@
             <RouterLink :to="`/video/${video.video_id}`" class="video-card-inner">
               <div class="video-meta">
                 <span class="video-id">{{ video.video_id }}</span>
-                <span class="video-badge">{{ segmentCountLabels[video.video_id] ?? '–' }} segments</span>
+                <span class="video-badge">{{ segmentCountLabels[video.video_id] ?? '–' }} segmentos</span>
               </div>
               <h2 class="video-title">{{ video.title }}</h2>
               <div class="video-arrow">→</div>

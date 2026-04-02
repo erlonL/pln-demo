@@ -10,7 +10,7 @@
     <p class="panel-meaning">{{ labelMeta.meaning }}</p>
   </div>
   <div class="meaning-panel empty" v-else>
-    <span>Play video to see active technique</span>
+    <span>Reproduza o vídeo para ver a técnica ativa</span>
   </div>
 </template>
 

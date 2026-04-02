@@ -11,8 +11,8 @@
       @loadedmetadata="onLoaded"
     />
     <div v-if="!src" class="no-video">
-      <span>No video file available for this analysis.</span>
-      <small>Place an MP4 at <code>backend/data/videos/{{ videoId }}.mp4</code></small>
+      <span>Nenhum arquivo de vídeo disponível para esta análise.</span>
+      <small>Coloque um MP4 em <code>backend/data/videos/{{ videoId }}.mp4</code></small>
     </div>
   </div>
 </template>

@@ -1,6 +1,6 @@
 <template>
   <div class="legend">
-    <div class="legend-title">Labels</div>
+    <div class="legend-title">Rótulos</div>
     <div class="chips">
       <button
         v-for="label in labels"

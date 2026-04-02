@@ -1,7 +1,7 @@
 <template>
   <div class="video-page">
     <nav class="topbar">
-      <RouterLink to="/" class="back-btn">← All Videos</RouterLink>
+      <RouterLink to="/" class="back-btn">← Todos os Vídeos</RouterLink>
       <div class="topbar-title">
         <span class="logo-sm">PD</span>
         <h2 class="topbar-name">{{ videoStore.currentVideoId }}</h2>
@@ -42,7 +42,7 @@
       <!-- Right sidebar: Transcript + Labels -->
       <aside class="right-col">
         <div class="transcript-header">
-          <span class="transcript-label">Transcript</span>
+          <span class="transcript-label">— Transcrição</span>
           <span class="time-display">{{ formatTime(videoStore.currentTime) }}</span>
         </div>
 
@@ -58,7 +58,7 @@
         <!-- Collapsible Legend pinned at bottom of sidebar -->
         <div class="legend-section">
           <button class="collapse-toggle" @click="legendOpen = !legendOpen">
-            <span>Labels</span>
+            <span>— Rótulos</span>
             <span class="toggle-icon">{{ legendOpen ? '▾' : '▸' }}</span>
           </button>
           <Transition name="collapse">
@@ -75,12 +75,12 @@
     </div>
 
     <div v-else-if="videoStore.loading" class="full-state">
-      <span class="pulse">Loading analysis...</span>
+      <span class="pulse">Carregando análise...</span>
     </div>
 
     <div v-else-if="videoStore.error" class="full-state error">
-      <span>Error: {{ videoStore.error }}</span>
-      <RouterLink to="/" class="back-btn mt">← Back to videos</RouterLink>
+      <span>Erro: {{ videoStore.error }}</span>
+      <RouterLink to="/" class="back-btn mt">← Voltar para vídeos</RouterLink>
     </div>
   </div>
 </template>

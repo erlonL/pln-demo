@@ -1,10 +1,10 @@
 <template>
   <div class="analyse-page">
     <nav class="topbar">
-      <RouterLink to="/" class="back-btn">← Back</RouterLink>
+      <RouterLink to="/" class="back-btn">← Voltar</RouterLink>
       <div class="topbar-title">
         <span class="logo-sm">PD</span>
-        <h2 class="topbar-name">Analyse</h2>
+        <h2 class="topbar-name">Análise</h2>
       </div>
     </nav>
 
@@ -12,9 +12,9 @@
       <!-- Form Section -->
       <main class="analyse-form">
         <div class="form-header">
-          <div class="section-label">— New Analysis</div>
-          <h1 class="form-title">Create Analysis</h1>
-          <p class="form-description">Upload a video or paste text to analyze for rhetorical devices</p>
+          <div class="section-label">— Nova Análise</div>
+          <h1 class="form-title">Criar Análise</h1>
+          <p class="form-description">Envie um vídeo ou cole um texto para analisar discursos</p>
         </div>
 
         <div class="input-tabs">
@@ -24,7 +24,7 @@
             @click="inputMode = 'text'"
           >
             <span class="tab-icon">T</span>
-            <span>Text</span>
+            <span>Texto</span>
           </button>
           <!-- FEATURE FLAG: VIDEO MODE DISABLED - Change enableVideoMode to true to enable -->
           <button 
@@ -32,28 +32,28 @@
             :class="{ active: inputMode === 'video', disabled: !enableVideoMode }"
             @click="inputMode = 'video'"
             :disabled="!enableVideoMode"
-            :title="!enableVideoMode ? 'Video analysis coming soon' : 'Analyze video content'"
+            :title="!enableVideoMode ? 'Análise de vídeo em breve' : 'Analisar conteúdo de vídeo'"
           >
             <span class="tab-icon">▶</span>
-            <span>Video</span>
+            <span>Vídeo</span>
           </button>
         </div>
 
         <!-- Text Input -->
         <div v-if="inputMode === 'text'" class="input-section">
-          <label class="input-label">Text Content</label>
+          <label class="input-label">Conteúdo de Texto</label>
           <textarea 
             v-model="textInput"
             class="text-input"
-            placeholder="Paste text here to analyze..."
+            placeholder="Cole um texto aqui para analisar..."
             :disabled="analyzing"
           />
-          <span class="char-count">{{ textInput.length }} characters</span>
+          <span class="char-count">{{ textInput.length }} caracteres</span>
         </div>
 
         <!-- Video Input -->
         <div v-else class="input-section">
-          <label class="input-label">Video File</label>
+          <label class="input-label">Arquivo de Vídeo</label>
           <div 
             class="file-upload"
             @click="fileInput?.click()"
@@ -72,9 +72,9 @@
             <div class="upload-content">
               <span class="upload-icon">📹</span>
               <p class="upload-text">
-                <strong>Click to upload</strong> or drag and drop
+                <strong>Clique para fazer upload</strong> ou arraste e solte
               </p>
-              <span class="upload-hint">MP4, WebM or Ogg (up to 100MB)</span>
+              <span class="upload-hint">MP4, WebM ou Ogg (até 100MB)</span>
             </div>
           </div>
           <div v-if="videoFile" class="file-selected">
@@ -97,7 +97,7 @@
           :disabled="analyzing || !canAnalyze"
         >
           <span v-if="analyzing" class="spinner"></span>
-          <span>{{ analyzing ? 'Analyzing...' : 'Analyze' }}</span>
+          <span>{{ analyzing ? 'Analisando...' : 'Analisar' }}</span>
         </button>
 
         <p v-if="error" class="error-msg">{{ error }}</p>
@@ -107,13 +107,13 @@
       <Transition name="slide-up">
         <div v-if="results" class="results-section">
           <div class="results-header">
-            <h2 class="results-title">Analysis Results</h2>
+            <h2 class="results-title">Resultados da Análise</h2>
             <button class="close-btn" @click="results = null">✕</button>
           </div>
 
           <!-- Original Text -->
           <div class="original-text-block">
-            <h3 class="block-title">Original Text</h3>
+            <h3 class="block-title">Texto Original</h3>
             <p class="original-text">{{ results.original_text }}</p>
           </div>
 
@@ -129,9 +129,9 @@
 
           <!-- Detected Segments -->
           <div class="segments-block">
-            <h3 class="block-title">Detected Segments</h3>
+            <h3 class="block-title">Segmentos Detectados</h3>
             <div v-if="results.results.length === 0" class="no-segments">
-              No segments detected in this content.
+              Nenhum segmento detectado neste conteúdo.
             </div>
             <div v-else class="segments-list">
               <div v-for="(seg, i) in results.results" :key="i" class="segment-item">
@@ -217,7 +217,7 @@ const analyzeContent = async () => {
 
     results.value = await response.json()
   } catch (err) {
-    error.value = err.message || 'Failed to analyze content'
+    error.value = err.message || 'Falha ao analisar conteúdo'
   } finally {
     analyzing.value = false
   }

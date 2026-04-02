@@ -73,11 +73,14 @@
 
           <!-- Métricas -->
           <div class="stats-grid">
-            <div class="stat-card" v-for="stat in results.label_counts" :key="stat.label">
+            <div class="stat-card" v-for="stat in results.label_counts" :key="stat.label" :style="{ 
+                background: labelColors[stat.label]?.bg || 'var(--surface2)',
+                borderColor: labelColors[stat.label]?.border || 'var(--border)',
+              }">
               <div class="stat-label">{{ stat.label }}</div>
-              <div class="stat-count">{{ stat.count }}</div>
+              <div class="stat-count" :style="{ color: labelColors[stat.label]?.text || '#ff3333' }">{{ stat.count }}</div>
               <div class="stat-percentage">{{ stat.percentage }}%</div>
-              <div class="stat-bar" :style="{ width: stat.percentage + '%' }"></div>
+              <div class="stat-bar" :style="{ width: stat.percentage + '%', background: labelColors[stat.label]?.text || '#ff3333' }"></div>
             </div>
           </div>
           <!-- Sentenças -->
@@ -90,7 +93,11 @@
               <div v-for="(seg, i) in results.results" :key="i" class="segment-item">
                 <div class="segment-content">
                   <p class="segment-text">{{ seg.sentence }}</p>
-                  <span class="segment-label" :data-label="seg.label">{{ seg.label }}</span>
+                  <span class="segment-label" :style="{ 
+                    background: labelColors[seg.label]?.bg || 'var(--surface3)',
+                    borderColor: labelColors[seg.label]?.border || 'var(--border)',
+                    color: labelColors[seg.label]?.text || 'var(--text)'
+                  }">{{ seg.label }}</span>
                 </div>
               </div>
             </div>
@@ -116,6 +123,49 @@ const analyzing = ref(false)
 const results = ref(null)
 const error = ref(null)
 
+const labelColors = {
+  'Neutro': {
+    bg: 'rgba(107, 114, 128, 0.1)',
+    border: '#6B7280',
+    text: '#374151'
+  },
+  'Descredibilidade': {
+    bg: 'rgba(245, 158, 11, 0.1)',
+    border: '#F59E0B',
+    text: '#D97706'
+  },
+  'Imposição': {
+    bg: 'rgba(220, 38, 38, 0.1)',
+    border: '#DC2626',
+    text: '#991B1B'
+  },
+  'Apelo ao Medo': {
+    bg: 'rgba(153, 27, 27, 0.1)',
+    border: '#991B1B',
+    text: '#7F1D1D'
+  },
+  'Repetição': {
+    bg: 'rgba(59, 130, 246, 0.1)',
+    border: '#3B82F6',
+    text: '#1E40AF'
+  },
+  'Exagero ou Minimização': {
+    bg: 'rgba(139, 92, 246, 0.1)',
+    border: '#8B5CF6',
+    text: '#6D28D9'
+  },
+  'Apelo Patriótico': {
+    bg: 'rgba(34, 197, 94, 0.1)',
+    border: '#22C55E',
+    text: '#166534'
+  },
+  'Palavras Fortes': {
+    bg: 'rgba(236, 72, 153, 0.1)',
+    border: '#EC4899',
+    text: '#BE185D'
+  }
+}
+
 const canAnalyze = computed(() => {
   return inputMode.value === 'text'
     ? textInput.value.trim().length > 0
@@ -125,7 +175,7 @@ const canAnalyze = computed(() => {
 // Percentual do No_Label
 const noLabelPct = computed(() => {
   if (!results.value) return 0
-  const stat = results.value.label_counts.find(s => s.label === 'No_Label')
+  const stat = results.value.label_counts.find(s => s.label === 'Neutro')
   return stat ? stat.percentage : 0
 })
 

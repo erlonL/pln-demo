@@ -4,7 +4,7 @@
       <RouterLink to="/" class="back-btn">← All Videos</RouterLink>
       <div class="topbar-title">
         <span class="logo-sm">PD</span>
-        <span class="topbar-name">{{ videoStore.currentVideoId }}</span>
+        <h2 class="topbar-name">{{ videoStore.currentVideoId }}</h2>
       </div>
     </nav>
 
@@ -152,7 +152,7 @@ onMounted(async () => {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  background: var(--bg);
+  background: #1a1a1a;
   overflow: hidden;
 }
 
@@ -160,25 +160,29 @@ onMounted(async () => {
   display: flex;
   align-items: center;
   gap: 16px;
-  padding: 12px 24px;
-  border-bottom: 1px solid var(--border);
-  background: var(--surface);
+  padding: 16px 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.3) 100%);
   flex-shrink: 0;
+  backdrop-filter: blur(8px);
 }
 
 .back-btn {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 12px;
   color: var(--text3);
-  padding: 5px 10px;
-  border: 1px solid var(--border);
+  padding: 6px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: var(--radius);
-  transition: color 0.15s, border-color 0.15s;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+  text-decoration: none;
+  display: inline-block;
 }
 
 .back-btn:hover {
-  color: var(--text);
-  border-color: var(--border2);
+  color: #ff3333;
+  border-color: #ff3333;
+  background: rgba(255, 51, 51, 0.05);
 }
 
 .back-btn.mt {
@@ -189,24 +193,28 @@ onMounted(async () => {
 .topbar-title {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   margin-left: auto;
 }
 
 .logo-sm {
-  background: var(--accent);
+  background: #ff3333;
   color: white;
   font-family: var(--font-display);
-  font-weight: 800;
-  font-size: 11px;
-  padding: 3px 7px;
+  font-weight: 900;
+  font-size: 12px;
+  padding: 4px 8px;
   border-radius: 4px;
+  letter-spacing: 0.5px;
 }
 
 .topbar-name {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  color: var(--text2);
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0;
+  letter-spacing: -0.5px;
 }
 
 .page-body {
@@ -238,23 +246,24 @@ onMounted(async () => {
 /* Only label overlay — minimal, top-left corner */
 .label-overlay {
   position: absolute;
-  top: 10px;
-  left: 10px;
+  top: 16px;
+  left: 16px;
   pointer-events: none;
+  z-index: 10;
 }
 
 .label-chip {
   display: inline-block;
   font-family: var(--font-mono);
-  font-size: 10px;
-  font-weight: 600;
+  font-size: 11px;
+  font-weight: 700;
   letter-spacing: 1px;
   text-transform: uppercase;
-  padding: 3px 10px;
-  border-radius: 20px;
-  border: 1px solid currentColor;
-  background: rgba(0, 0, 0, 0.55);
-  backdrop-filter: blur(4px);
+  padding: 6px 12px;
+  border-radius: 4px;
+  border: 1.5px solid currentColor;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
 }
 
 .fade-enter-active,
@@ -269,18 +278,19 @@ onMounted(async () => {
 /* Meaning panel below video, compact */
 .meaning-row {
   flex-shrink: 0;
-  border-top: 1px solid var(--border);
-  background: var(--surface);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(26, 26, 26, 0.8);
+  backdrop-filter: blur(8px);
 }
 
 /* Right sidebar — fixed width, contains transcript + labels */
 .right-col {
-  width: 280px;
+  width: 300px;
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
-  border-left: 1px solid var(--border);
-  background: var(--surface);
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(26, 26, 26, 0.9);
   overflow: hidden;
 }
 
@@ -288,27 +298,30 @@ onMounted(async () => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 12px;
-  border-bottom: 1px solid var(--border);
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   flex-shrink: 0;
-  background: var(--surface);
+  background: rgba(0, 0, 0, 0.4);
 }
 
 .transcript-label {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 2px;
   text-transform: uppercase;
   color: var(--text3);
+  font-weight: 600;
 }
 
 .time-display {
   font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--accent);
-  background: var(--surface2);
-  padding: 2px 8px;
-  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #ff3333;
+  background: rgba(255, 51, 51, 0.1);
+  padding: 3px 10px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 51, 51, 0.3);
 }
 
 /* Transcript scrolls, legend stays pinned at bottom */
@@ -321,8 +334,8 @@ onMounted(async () => {
 /* Legend pinned to bottom of sidebar */
 .legend-section {
   flex-shrink: 0;
-  border-top: 1px solid var(--border);
-  background: var(--surface);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(0, 0, 0, 0.4);
 }
 
 .collapse-toggle {
@@ -330,29 +343,36 @@ onMounted(async () => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 9px 12px;
+  padding: 10px 16px;
   background: none;
   border: none;
   cursor: pointer;
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 1.5px;
   text-transform: uppercase;
   color: var(--text3);
-  transition: color 0.15s;
+  transition: color 0.15s, background 0.15s;
+  font-weight: 600;
 }
 
 .collapse-toggle:hover {
-  color: var(--text);
+  color: #ff3333;
+  background: rgba(255, 51, 51, 0.05);
 }
 
 .toggle-icon {
   font-size: 12px;
   color: var(--text3);
+  transition: color 0.15s;
+}
+
+.collapse-toggle:hover .toggle-icon {
+  color: #ff3333;
 }
 
 .collapse-body {
-  padding: 0 12px 12px;
+  padding: 8px 16px 12px;
   overflow: hidden;
 }
 
@@ -381,7 +401,7 @@ onMounted(async () => {
 }
 
 .full-state.error {
-  color: #EF4444;
+  color: #ff3333;
 }
 
 .pulse {

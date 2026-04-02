@@ -1,18 +1,28 @@
 <template>
   <div class="landing">
     <div class="landing-noise"></div>
-    <div class="landing-inner">
-      <header class="landing-header">
-        <div class="logo-mark">PD</div>
-        <div class="header-text">
-          <h1 class="site-title">Persuasion<br>Detector</h1>
-          <p class="site-sub">Automated analysis of rhetorical techniques in video content.</p>
+    
+    <!-- Full banner background with overlay content -->
+    <div class="hero-banner">
+      <img src="/banner.png" alt="Beyond Words Banner" class="banner-image" />
+      <!-- Gradient overlay to blend edges -->
+      <div class="banner-fade"></div>
+      
+      <!-- Content overlaid on banner -->
+      <div class="banner-content">
+        <div class="hero-text">
+          <p class="hero-label">PROCESSAMENTO DE LINGUAGEM NATURAL 2025.2</p>
+          <h1 class="hero-title">ALÉM DAS<br>PALAVRAS</h1>
+          <p class="hero-subtitle">Um estudo sobre identificação de intenções na política mundial</p>
         </div>
-      </header>
+      </div>
+    </div>
 
+    <!-- Content below banner - seamlessly integrated -->
+    <div class="landing-content">
       <section class="videos-section">
         <div class="section-label">— Available Analyses</div>
-
+        
         <div v-if="loading" class="state-msg">
           <span class="pulse">Loading...</span>
         </div>
@@ -37,10 +47,6 @@
           </li>
         </ul>
       </section>
-
-      <footer class="landing-footer">
-        <span>Persuasion Detector — Local Demo</span>
-      </footer>
     </div>
   </div>
 </template>
@@ -58,7 +64,6 @@ const segmentCountLabels = ref({})
 
 onMounted(async () => {
   await Promise.all([videoStore.fetchVideos(), labelStore.fetchLabels()])
-  // Pre-fetch segment counts
   for (const v of videoStore.videos) {
     try {
       const res = await fetch(`/api/transcripts/${v.video_id}`)
@@ -74,8 +79,7 @@ onMounted(async () => {
 
 <style scoped>
 .landing {
-  min-height: 100vh;
-  background: var(--bg);
+  background: #0a0a0a;
   position: relative;
   overflow: hidden;
 }
@@ -83,57 +87,113 @@ onMounted(async () => {
 .landing-noise {
   position: fixed;
   inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E");
   pointer-events: none;
   z-index: 0;
 }
 
-.landing-inner {
+/* Full banner as hero background */
+.hero-banner {
   position: relative;
+  width: 100%;
+  height: 600px;
+  overflow: visible;
+}
+
+.banner-image {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Gradient fade on edges to blend into background */
+.banner-fade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(10, 10, 10, 0) 0%,
+    rgba(10, 10, 10, 0) 70%,
+    rgba(10, 10, 10, 0.4) 85%,
+    rgba(10, 10, 10, 0.8) 95%,
+    rgba(10, 10, 10, 1) 100%
+  );
+  pointer-events: none;
   z-index: 1;
-  max-width: 760px;
-  margin: 0 auto;
+}
+
+/* Horizontal fade on sides */
+.banner-fade::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    rgba(10, 10, 10, 0.3) 0%,
+    rgba(10, 10, 10, 0) 15%,
+    rgba(10, 10, 10, 0) 85%,
+    rgba(10, 10, 10, 0.3) 100%
+  );
+}
+
+/* Content overlaid on banner */
+.banner-content {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
   padding: 60px 32px;
 }
 
-.landing-header {
+.hero-text {
   display: flex;
-  align-items: flex-start;
+  flex-direction: column;
   gap: 24px;
-  margin-bottom: 72px;
+  max-width: 900px;
 }
 
-.logo-mark {
-  width: 56px;
-  height: 56px;
-  background: var(--accent);
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.hero-label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.hero-title {
   font-family: var(--font-display);
-  font-weight: 800;
+  font-size: 72px;
+  font-weight: 900;
+  line-height: 0.9;
+  letter-spacing: -2px;
+  color: #ff3333;
+  text-shadow: 0 4px 16px rgba(0, 0, 0, 0.9), 0 8px 32px rgba(0, 0, 0, 0.7);
+  margin: 0;
+}
+
+.hero-subtitle {
   font-size: 18px;
-  letter-spacing: 1px;
-  border-radius: var(--radius);
-  flex-shrink: 0;
-  margin-top: 6px;
-}
-
-.site-title {
-  font-family: var(--font-display);
-  font-size: 48px;
-  font-weight: 800;
-  line-height: 1.05;
-  letter-spacing: -1px;
-  color: var(--text);
-}
-
-.site-sub {
-  margin-top: 10px;
-  color: var(--text2);
-  font-size: 15px;
+  color: rgba(255, 255, 255, 0.8);
   max-width: 400px;
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* Content below banner - seamlessly integrated */
+.landing-content {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  padding: 60px 32px 60px;
+  background: #0a0a0a;
+}
+
+.videos-section {
+  margin-bottom: 40px;
 }
 
 .section-label {
@@ -150,6 +210,8 @@ onMounted(async () => {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  margin: 0;
+  padding: 0;
 }
 
 .video-card {
@@ -171,10 +233,11 @@ onMounted(async () => {
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   transition: border-color 0.2s, background 0.2s, transform 0.15s;
+  text-decoration: none;
 }
 
 .video-card-inner:hover {
-  border-color: var(--accent);
+  border-color: #ff3333;
   background: var(--surface2);
   transform: translateX(4px);
 }
@@ -189,7 +252,7 @@ onMounted(async () => {
 .video-id {
   font-family: var(--font-mono);
   font-size: 11px;
-  color: var(--accent);
+  color: #ff3333;
   letter-spacing: 0.5px;
 }
 
@@ -205,6 +268,7 @@ onMounted(async () => {
   font-weight: 600;
   font-size: 18px;
   color: var(--text);
+  margin: 0;
 }
 
 .video-arrow {
@@ -214,7 +278,7 @@ onMounted(async () => {
 }
 
 .video-card-inner:hover .video-arrow {
-  color: var(--accent);
+  color: #ff3333;
   transform: translateX(4px);
 }
 
@@ -234,13 +298,29 @@ onMounted(async () => {
   50% { opacity: 0.4; }
 }
 
-.landing-footer {
-  margin-top: 80px;
-  padding-top: 24px;
-  border-top: 1px solid var(--border);
-  color: var(--text3);
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.5px;
+@media (max-width: 768px) {
+  .hero-banner {
+    height: 400px;
+  }
+
+  .banner-content {
+    padding: 40px 24px;
+  }
+
+  .hero-text {
+    gap: 16px;
+  }
+
+  .hero-title {
+    font-size: 48px;
+  }
+
+  .hero-subtitle {
+    font-size: 16px;
+  }
+
+  .landing-content {
+    padding: 50px 24px 40px;
+  }
 }
 </style>

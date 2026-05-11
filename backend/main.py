@@ -8,7 +8,7 @@ import nltk
 nltk.download("punkt_tab", quiet=True)
 from nltk.tokenize import sent_tokenize
 
-CAMINHO_MODELO = "modelo2/"
+CAMINHO_MODELO = "modelo3/"
 
 tokenizer = AutoTokenizer.from_pretrained(CAMINHO_MODELO)
 modelo = AutoModelForSequenceClassification.from_pretrained(CAMINHO_MODELO)

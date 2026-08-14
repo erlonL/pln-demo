@@ -1,121 +1,69 @@
-# Persuasion Detector — Local Demo
+# Além das Palavras — demo interativa
 
-A video transcript analyzer that highlights rhetorical/persuasion techniques during playback.
+Companheiro interativo do artigo **“Além das Palavras: Detectando Técnicas Persuasivas em Notícias e Artigos de Opinião da Língua Portuguesa com BERT-Tiny”**.
 
-## Project Structure
+O site segmenta texto em sentenças e executa o checkpoint real do projeto diretamente no navegador. Não existe API de inferência em produção e o texto analisado não é enviado para servidores.
 
-```
-project/
-├── backend/
-│   ├── main.py               # FastAPI app
-│   ├── requirements.txt
-│   └── data/
-│       ├── labels.json        # Label registry (source of truth)
-│       ├── transcripts/       # Transcript JSON files
-│       │   ├── debate_001.json
-│       │   └── interview_002.json
-│       └── videos/            # Place your .mp4 files here
-│           └── (place debate_001.mp4, interview_002.mp4 here)
-└── frontend/
-    ├── package.json
-    ├── vite.config.js
-    ├── index.html
-    └── src/
-        ├── main.js
-        ├── App.vue
-        ├── style.css
-        ├── router/index.js
-        ├── stores/
-        │   ├── labelStore.js
-        │   └── videoStore.js
-        └── components/
-            ├── VideoPlayer.vue
-            ├── TranscriptList.vue
-            ├── SegmentRow.vue
-            ├── LabelLegend.vue
-            └── LabelMeaningPanel.vue
-        └── pages/
-            ├── LandingPage.vue
-            └── VideoPage.vue
-```
-
-## Setup
-
-### 1. Backend
-
-```bash
-cd backend
-pip install -r requirements.txt
-uvicorn main:app --reload --port 8000
-```
-
-Backend runs at: http://localhost:8000
-
-### 2. Frontend
+## Executar
 
 ```bash
 cd frontend
-npm install
+npm install --ignore-scripts
 npm run dev
 ```
 
-Frontend runs at: http://localhost:5173
+Abra `http://localhost:5173/pln-demo/`.
 
-The Vite dev server proxies `/api` and `/media` to the backend automatically.
+## Validação
 
-### 3. Add Videos (Optional)
-
-Place MP4 files in `backend/data/videos/` matching the transcript names:
-- `backend/data/videos/debate_001.mp4`
-- `backend/data/videos/interview_002.mp4`
-
-The app works without video files — transcript analysis is fully functional.
-
-## Adding New Videos
-
-1. Create a transcript JSON in `backend/data/transcripts/<video_id>.json`:
-
-```json
-{
-  "video_id": "my_video",
-  "segments": [
-    {
-      "start_time": 0.0,
-      "end_time": 10.5,
-      "text": "The segment text here.",
-      "label": "Neutral"
-    }
-  ]
-}
+```bash
+cd frontend
+npm run typecheck
+npm run lint
+npm test
+npm run build
+npm run test:e2e
 ```
 
-2. Optionally place the video at `backend/data/videos/my_video.mp4`
+O teste completo do modelo baixa/carrega os artefatos locais e é habilitado com `RUN_MODEL_E2E=1 npm run test:e2e`.
 
-3. Available labels (from `data/labels.json`):
-   - Neutral
-   - Appeal to Emotion
-   - Fear Mongering
-   - Loaded Language
-   - False Dichotomy
-   - Ad Hominem
-   - Appeal to Authority
-   - Bandwagon
+## Modelo no navegador
 
-## API Endpoints
+- Fonte canônica: `backend/modelo3`
+- Arquitetura: BERT-Tiny, 2 camadas, dimensão 128, 2 cabeças
+- Runtime: Transformers.js + ONNX Runtime Web
+- Caminho preferencial: WebGPU; fallback: WASM
+- Checkpoint original: 17.552.400 bytes
+- ONNX implantado: 17.591.749 bytes
+- Download com tokenizer/configuração: 18.305.019 bytes
+- Limite: 512 tokens por sentença, com truncamento visível
 
-| Method | Path | Description |
-|--------|------|-------------|
-| GET | `/api/videos` | List available video IDs |
-| GET | `/api/labels` | Get label registry |
-| GET | `/api/transcripts/{video_id}` | Get sorted transcript |
-| GET | `/media/{video_id}.mp4` | Serve video file |
-| GET | `/health` | Health check |
+O modelo é baixado somente quando o visitante inicia uma análise. Um cache próprio valida tamanho e SHA-256 de cada artefato e usa o identificador `nome + versão + hash`. O service worker não armazena uma segunda cópia do modelo; ele guarda apenas o shell e, sob demanda, o runtime WASM.
 
-## Features
+Veja [MODEL_CARD.md](MODEL_CARD.md) para classes, métricas, paridade e limitações.
 
-- **Auto-scroll**: Active transcript segment scrolls into view during playback
-- **Label filtering**: Toggle label chips to show/hide segment types
-- **Seek on click**: Click any segment row to jump to that time
-- **Meaning panel**: Shows description of the currently active rhetorical technique
-- **Keyboard navigation**: Up/Down arrow keys + Enter/Space to navigate transcript
-- **Binary search sync**: O(log n) time-to-segment lookup on every timeupdate event
+## Reproduzir o ONNX
+
+```bash
+python -m venv .venv-export
+.venv-export/bin/pip install -r scripts/requirements-export.txt
+.venv-export/bin/python scripts/export_model.py
+.venv-export/bin/python scripts/verify_model.py \
+  --dataset ../pln/datasets/combined_dataset.csv
+```
+
+A quantização INT8 foi rejeitada porque alterou previsões do checkpoint. Ela não é distribuída.
+
+## GitHub Pages
+
+O Vite usa base `/pln-demo/`. O workflow em `.github/workflows/deploy-pages.yml` testa, compila e publica `frontend/dist` com GitHub Actions.
+
+URL esperada: https://erlonl.github.io/pln-demo/
+
+## Pesquisa
+
+- Repositório de pesquisa: https://github.com/kamilyassis/pln
+- Repositório da demo: https://github.com/erlonL/pln-demo
+- Modelo-base: https://huggingface.co/prajjwal1/bert-tiny
+
+O PDF do artigo não é redistribuído por esta aplicação.

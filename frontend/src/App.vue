@@ -8,6 +8,7 @@
       <nav aria-label="Navegação principal">
         <a href="#detector">Detector</a>
         <a href="#taxonomia">Técnicas</a>
+        <a href="#anotacoes">Anotações</a>
         <a href="#pesquisa">Pesquisa</a>
       </nav>
       <div class="header-actions">
@@ -217,6 +218,8 @@
         </div>
       </section>
 
+      <AnnotationExplorer @use-example="loadAnnotationExample" />
+
       <section id="pesquisa" class="research-section section-pad" data-tour="research">
         <div class="research-intro">
           <p class="eyebrow">Sobre a pesquisa</p>
@@ -276,6 +279,7 @@
 
 <script setup lang="ts">
 import { computed, nextTick, onMounted, ref } from 'vue'
+import AnnotationExplorer from './components/AnnotationExplorer.vue'
 import GuidedTour from './components/GuidedTour.vue'
 import { DEMO_EXAMPLES } from './data/examples'
 import { TECHNIQUES, TECHNIQUE_BY_ID, summarizeResults, type Technique } from './model/labels'
@@ -332,6 +336,11 @@ const themeLabel = computed(() => `Tema: ${theme.value === 'system' ? 'seguir si
 function technique(id: string): Technique { return TECHNIQUE_BY_ID[id] ?? TECHNIQUES[0]! }
 function percent(value: number): string { return `${Math.round(value * 100)}%` }
 function loadExample(text: string) { textInput.value = text; results.value = []; error.value = ''; document.querySelector<HTMLTextAreaElement>('#analysis-text')?.focus() }
+async function loadAnnotationExample(text: string) {
+  loadExample(text)
+  await nextTick()
+  document.querySelector('#detector')?.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' })
+}
 function clearText() { textInput.value = ''; results.value = []; error.value = '' }
 function openSettings() { settingsDialog.value?.showModal() }
 function closeOnBackdrop(event: MouseEvent) { if (event.target === settingsDialog.value) settingsDialog.value?.close() }

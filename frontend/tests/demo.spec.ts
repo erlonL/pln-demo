@@ -33,6 +33,41 @@ test('segments realistic Portuguese prose before inference', async ({ page }) =>
   await expect(page.getByText('3 sentenças')).toBeVisible()
 })
 
+test('loads, caches and explores the curated GPT annotation showcase on demand', async ({ page, context }) => {
+  const archiveRequests: string[] = []
+  page.on('request', (request) => {
+    if (request.url().endsWith('/data/gpt-annotations-v2.json')) archiveRequests.push(request.url())
+  })
+  await page.goto('./')
+  await expect(page.getByRole('heading', { name: /As decisões por trás/ })).toBeVisible()
+  expect(archiveRequests).toHaveLength(0)
+
+  await page.getByRole('button', { name: 'Explorar as 100 amostras' }).click()
+  await expect(page.getByText('100 resultados')).toBeVisible({ timeout: 30_000 })
+  expect(archiveRequests).toHaveLength(1)
+  const archiveCaches = await page.evaluate(async () => {
+    const names = (await caches.keys()).filter((name) => name.startsWith('alem-das-palavras:gpt-annotations:'))
+    return Promise.all(names.map(async (name) => ({ name, entries: (await (await caches.open(name)).keys()).length })))
+  })
+  expect(archiveCaches).toHaveLength(1)
+  expect(archiveCaches[0]?.entries).toBe(1)
+
+  await page.locator('#annotation-label').selectOption('Name_Calling-Labeling')
+  await page.locator('#annotation-source').selectOption('g1_faketrue_treated')
+  await expect(page.getByText('2 resultados')).toBeVisible()
+  await expect(page.getByText('Justificativa original em português').first()).toBeVisible()
+
+  await page.getByRole('button', { name: 'Analisar esta sentença' }).first().click()
+  await expect(page.locator('#analysis-text')).toHaveValue(/\S/)
+
+  await page.reload()
+  await context.setOffline(true)
+  await page.reload()
+  await page.getByRole('button', { name: 'Explorar as 100 amostras' }).click()
+  await expect(page.getByText('100 resultados')).toBeVisible({ timeout: 30_000 })
+  expect(archiveRequests).toHaveLength(1)
+})
+
 test('runs the real model and reuses it offline', async ({ page, context }) => {
   test.setTimeout(300_000)
   test.skip(!process.env.RUN_MODEL_E2E, 'Set RUN_MODEL_E2E=1 for the full 42 MB browser-runtime test.')

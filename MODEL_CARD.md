@@ -24,6 +24,8 @@ O FP32 ONNX apresentou 100% de paridade top-1 em uma amostra determinística de 
 
 O artigo descreve 19.581 sentenças, rotuladas automaticamente com GPT-4.1-nano a partir de Conexão Política, FakeTrueBr e G1 Fato ou Fake. SemEval23-T3 foi usada como referência para o esquema de persuasão. O artigo reporta 86% de acurácia no conjunto de teste.
 
+O explorador web publica uma seleção de 100 exemplos do snapshot `combined_dataset.csv`, escolhidos entre 17.499 anotações válidas. A curadoria equilibra as oito classes, preserva as três fontes e ranqueia legibilidade, qualidade da justificativa e diversidade lexical por um procedimento determinístico. O corpus completo não é distribuído pelo site. Outras 203 linhas contêm respostas técnicas `ERROR` por limite de requisições e não são tratadas como rótulos válidos. `scripts/export_annotations.py` valida e regenera o artefato público.
+
 ## Limitações
 
 - As anotações automáticas ainda não receberam validação humana sistemática.

@@ -40,6 +40,19 @@ O teste completo do modelo baixa/carrega os artefatos locais e é habilitado com
 
 O modelo é baixado somente quando o visitante inicia uma análise. Um cache próprio valida tamanho e SHA-256 de cada artefato e usa o identificador `nome + versão + hash`. O service worker não armazena uma segunda cópia do modelo; ele guarda apenas o shell e, sob demanda, o runtime WASM.
 
+## Acervo de anotações GPT
+
+A seção **Anotações** disponibiliza uma curadoria pública de 100 exemplos do snapshot `combined_dataset.csv`: sentença, rótulo, fonte e justificativa. O artefato tem cerca de 42 KB, é carregado somente quando o visitante abre a seleção e recebe cache próprio versionado. O corpus completo não é distribuído pelo site.
+
+A seleção mantém 13 exemplos para quatro classes e 12 para as demais, com 42 amostras da Conexão Política, 42 do G1 Fato ou Fake e 16 do FakeTrueBr tratado. O exportador aplica cotas fixas e um ranking determinístico de legibilidade, qualidade da justificativa e diversidade lexical. As justificativas originalmente escritas em português são preservadas. Para as fontes cuja justificativa está em inglês, a interface mostra uma síntese portuguesa baseada no rótulo e nos termos destacados, mantendo o texto original recolhido para auditoria. As 203 respostas `ERROR` por falha técnica são contabilizadas, mas não apresentadas como anotações científicas válidas.
+
+Para reproduzir o artefato web:
+
+```bash
+python3 scripts/export_annotations.py \
+  --input ../pln/datasets/combined_dataset.csv
+```
+
 Veja [MODEL_CARD.md](MODEL_CARD.md) para classes, métricas, paridade e limitações.
 
 ## Reproduzir o ONNX

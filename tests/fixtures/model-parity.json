@@ -1,0 +1,39 @@
+{
+  "source_checkpoint": "backend/modelo3",
+  "source_sha256": "a5ce082ed1aa2c61def5c5d8f36b907e6c72e2b8cb217493b9c11487add7607b",
+  "seed": 42,
+  "cases": [
+    {
+      "sentence": "Um assessor de Gilberto Gil confirmou: \"Isso aí foi coisa da Paula [Lavigne]. Não teve cachê, não teve nada\". A assessoria de Daniela Mercury completou: \"Atendemos um chamado do Caetano. Mas a organização do trio [em Salvador] foi da nossa equipe, bancada com recursos próprios. A última vez que a Daniela usou algo com a Rouanet foi há mais de dez anos\".",
+      "label": "No_Label"
+    },
+    {
+      "sentence": "Já o bom historiador se parece com o ogro da lenda. Quem não conseguir isso será apenas, no máximo, um serviçal da erudição.",
+      "label": "Loaded_Language"
+    },
+    {
+      "sentence": "aí grupo o sobrinho do deputado marcelo freixo foi preso em campos e a determinação é que o degase leve ele agora para o rj , está ai a explicação dele protejer tanto os vagabundos . passem adiante o informe é verídico . repassando",
+      "label": "Name_Calling-Labeling"
+    },
+    {
+      "sentence": "[07] O que é o Amor? A Igreja Católica discrimina os homossexuais?",
+      "label": "Doubt"
+    },
+    {
+      "sentence": "Assistimos a tudo isso atônitos, porém, levantando palavras de ordem, hashtags no Twitter, oras bolas!",
+      "label": "Repetition"
+    },
+    {
+      "sentence": "“está a ser comercializada uma ‘barbie aborto’. deus proteja nossas crianças”., “não sei se isso é verdade!! mas barbie aborto e sacanagem pqp.  desisto do ser humano”.",
+      "label": "Appeal_to_Fear-Prejudice"
+    },
+    {
+      "sentence": "Durante a sessão do Senado Federal que rejeitou o decreto das armas de Bolsonaro, a senadora Kátia Abreu (PDT-TO) fez um discurso inflamado contra o direito do cidadão possuir armas para defender sua família, sua propriedade e a própria vida.",
+      "label": "Flag_Waving"
+    },
+    {
+      "sentence": "O terceiro começou em 2011 - e continua até hoje. O segundo começou quando Kim Il Sung morreu em 1994 e antes de Kim Jong Un aparecer pela primeira vez em 2009.",
+      "label": "Exaggeration-Minimisation"
+    }
+  ]
+}

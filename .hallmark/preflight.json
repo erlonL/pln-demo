@@ -1,0 +1,10 @@
+{
+  "scanned_at": "2026-08-25",
+  "framework": "Vue 3.5 with Vite 7",
+  "design_source": "docs/DESIGN_SYSTEM.md",
+  "font_stack": "Barlow Condensed, DM Sans, DM Mono",
+  "palette": "Political Print Laboratory carbon, paper, signal red, semantic data colours",
+  "motion": "CSS-only mechanical motion with reduced-motion support",
+  "spacing": "4px token scale",
+  "scope": "single-page application"
+}

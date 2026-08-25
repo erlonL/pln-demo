@@ -1,0 +1,239 @@
+:root {
+  /* Primitive palette */
+  --ds-color-carbon: #0a0a0a;
+  --ds-color-ink: #171717;
+  --ds-color-paper: #eee9df;
+  --ds-color-paper-muted: #d7d0c4;
+  --ds-color-paper-clean: #faf8f3;
+  --ds-color-signal: #ef201c;
+  --ds-color-signal-dark: #b91512;
+  --ds-color-success: #2f7d59;
+  --ds-color-warning: #c48619;
+  --ds-color-info: #295f9e;
+
+  /* Semantic color roles */
+  --ds-surface-page: var(--ds-color-carbon);
+  --ds-surface-ink: var(--ds-color-ink);
+  --ds-surface-paper: var(--ds-color-paper);
+  --ds-surface-paper-clean: var(--ds-color-paper-clean);
+  --ds-surface-signal: var(--ds-color-signal);
+  --ds-text-primary: var(--ds-color-paper-clean);
+  --ds-text-secondary: var(--ds-color-paper-muted);
+  --ds-text-on-paper: var(--ds-color-ink);
+  --ds-text-on-signal: var(--ds-color-carbon);
+  --ds-rule-on-dark: rgba(250, 248, 243, 0.32);
+  --ds-rule-on-paper: rgba(23, 23, 23, 0.42);
+  --ds-focus: var(--ds-color-paper-clean);
+
+  /* Type families */
+  --ds-font-display: "Barlow Condensed", "Arial Narrow", "Roboto Condensed", sans-serif;
+  --ds-font-body: "DM Sans", Arial, sans-serif;
+  --ds-font-meta: "DM Mono", "SFMono-Regular", Consolas, monospace;
+
+  /* Fluid type scale */
+  --ds-type-eyebrow: 0.75rem;
+  --ds-type-small: 0.875rem;
+  --ds-type-body: 1rem;
+  --ds-type-lead: clamp(1.125rem, 1rem + 0.45vw, 1.375rem);
+  --ds-type-subhead: clamp(1.5rem, 1.25rem + 1.1vw, 2.25rem);
+  --ds-type-title: clamp(2.5rem, 1.75rem + 3.2vw, 5.5rem);
+  --ds-type-display: clamp(4rem, 2rem + 9vw, 10rem);
+  --ds-type-hero: clamp(4rem, 1.5rem + 6vw, 7rem);
+
+  --ds-weight-regular: 400;
+  --ds-weight-medium: 500;
+  --ds-weight-semibold: 600;
+  --ds-weight-bold: 700;
+  --ds-weight-black: 900;
+
+  --ds-leading-display: 1;
+  --ds-leading-heading: 1;
+  --ds-leading-tight: 1.15;
+  --ds-leading-body: 1.55;
+  --ds-tracking-display: -0.025em;
+  --ds-tracking-heading: -0.015em;
+  --ds-tracking-meta: 0.14em;
+
+  /* 4px spacing scale */
+  --ds-space-0: 0;
+  --ds-space-1: 0.25rem;
+  --ds-space-2: 0.5rem;
+  --ds-space-3: 0.75rem;
+  --ds-space-4: 1rem;
+  --ds-space-5: 1.5rem;
+  --ds-space-6: 2rem;
+  --ds-space-7: 3rem;
+  --ds-space-8: 4rem;
+  --ds-space-9: 6rem;
+  --ds-space-10: 8rem;
+  --ds-gutter: clamp(1rem, 3vw, 3rem);
+  --ds-section-space: clamp(4rem, 9vw, 8rem);
+  --ds-section-space-compact: clamp(2rem, 5vw, 4rem);
+  --ds-section-space-hero: clamp(5rem, 12vw, 10rem);
+  --ds-hero-space-start: clamp(1.5rem, 3vw, 2.5rem);
+  --ds-hero-space-end: clamp(2rem, 5vw, 4rem);
+  --ds-panel-space: clamp(1rem, 4vw, 2rem);
+  --ds-paper-space: clamp(2rem, 7vw, 4rem);
+
+  /* Measures and grids */
+  --ds-measure-copy: 68ch;
+  --ds-measure-summary: 45ch;
+  --ds-width-narrow: 48rem;
+  --ds-width-default: 80rem;
+  --ds-width-wide: 96rem;
+  --ds-grid-columns-mobile: 4;
+  --ds-grid-columns-tablet: 8;
+  --ds-grid-columns-desktop: 12;
+  --ds-grid-gap: clamp(0.75rem, 2vw, 1.5rem);
+
+  /* Shape and rules */
+  --ds-border-thin: 1px;
+  --ds-border-strong: 2px;
+  --ds-radius-none: 0;
+  --ds-radius-xs: 2px;
+  --ds-radius-sm: 6px;
+  --ds-radius-pill: 999px;
+
+  /* Print-like depth: hard offsets, never diffuse glow */
+  --ds-shadow-print-sm: 4px 4px 0 var(--ds-color-signal);
+  --ds-shadow-print-md: 8px 8px 0 var(--ds-color-signal);
+  --ds-shadow-ink-sm: 4px 4px 0 var(--ds-color-ink);
+  --ds-shadow-ink-md: 8px 8px 0 var(--ds-color-ink);
+
+  /* Layering */
+  --ds-z-base: 0;
+  --ds-z-texture: 10;
+  --ds-z-content: 20;
+  --ds-z-nav: 40;
+  --ds-z-overlay: 80;
+  --ds-z-modal: 100;
+
+  /* Mechanical motion */
+  --ds-duration-instant: 100ms;
+  --ds-duration-control: 180ms;
+  --ds-duration-reveal: 320ms;
+  --ds-duration-editorial: 600ms;
+  --ds-ease-mechanical: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ds-ease-snap: cubic-bezier(0.3, 0, 0.2, 1);
+
+  /* Interaction and media */
+  --ds-control-compact: 2.5rem;
+  --ds-control-default: 3rem;
+  --ds-touch-target: 2.75rem;
+  --ds-ratio-square: 1;
+  --ds-ratio-portrait: 4 / 5;
+  --ds-ratio-editorial: 4 / 3;
+  --ds-ratio-wide: 16 / 9;
+
+  /* Code-native material effects */
+  --ds-texture-opacity: 0.055;
+  --ds-halftone-size: 5px;
+  --ds-texture-grain: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.9'/%3E%3C/svg%3E");
+
+  /* Product surface roles */
+  --color-paper: var(--ds-color-carbon);
+  --color-paper-2: var(--ds-color-ink);
+  --color-paper-insert: var(--ds-color-paper);
+  --color-paper-clean: var(--ds-color-paper-clean);
+  --color-ink: var(--ds-color-paper-clean);
+  --color-ink-2: var(--ds-color-paper-muted);
+  --color-ink-on-paper: var(--ds-color-ink);
+  --color-muted-on-paper: #5f5a52;
+  --color-rule: rgba(250, 248, 243, 0.32);
+  --color-rule-strong: rgba(250, 248, 243, 0.58);
+  --color-rule-paper: rgba(23, 23, 23, 0.42);
+  --color-rule-paper-soft: rgba(23, 23, 23, 0.22);
+  --color-accent: var(--ds-color-signal);
+  --color-accent-dark: var(--ds-color-signal-dark);
+  --color-accent-ink: var(--ds-color-carbon);
+  --color-focus: var(--ds-color-paper-clean);
+  --color-focus-paper: var(--ds-color-carbon);
+  --color-overlay: rgba(10, 10, 10, 0.78);
+  --color-overlay-soft: rgba(10, 10, 10, 0.56);
+  --color-disabled: rgba(250, 248, 243, 0.48);
+  --color-disabled-paper: rgba(23, 23, 23, 0.48);
+  --color-danger: var(--ds-color-signal-dark);
+  --color-success: var(--ds-color-success);
+  --color-warning: var(--ds-color-warning);
+  --color-info: var(--ds-color-info);
+
+  /* Semantic classification colours remain distinct from brand red. */
+  --tone-slate: #4d625d;
+  --tone-slate-bg: #d3ddd8;
+  --tone-coral: #9f3f2d;
+  --tone-coral-bg: #ebc9bd;
+  --tone-red: #92352f;
+  --tone-red-bg: #e7c2bd;
+  --tone-amber: #845b16;
+  --tone-amber-bg: #ead5a8;
+  --tone-blue: #315f82;
+  --tone-blue-bg: #c5d9e6;
+  --tone-plum: #6f4961;
+  --tone-plum-bg: #dbc4d1;
+  --tone-green: #356951;
+  --tone-green-bg: #c1d9cb;
+  --tone-violet: #5f568c;
+  --tone-violet-bg: #d0cce2;
+
+  /* Hallmark portability aliases. */
+  --font-display: var(--ds-font-display);
+  --font-body: var(--ds-font-body);
+  --font-outlier: var(--ds-font-body);
+  --space-3xs: var(--ds-space-1);
+  --space-2xs: var(--ds-space-2);
+  --space-xs: var(--ds-space-3);
+  --space-sm: var(--ds-space-4);
+  --space-md: var(--ds-space-5);
+  --space-lg: var(--ds-space-6);
+  --space-xl: var(--ds-space-7);
+  --space-2xl: var(--ds-space-8);
+  --space-3xl: var(--ds-space-9);
+  --space-4xl: var(--ds-space-10);
+  --text-xs: var(--ds-type-eyebrow);
+  --text-sm: var(--ds-type-small);
+  --text-base: var(--ds-type-body);
+  --text-md: var(--ds-type-lead);
+  --text-lg: var(--ds-type-subhead);
+  --text-xl: var(--ds-type-title);
+  --text-display: var(--ds-type-display);
+  --ease-out: var(--ds-ease-mechanical);
+  --ease-in: cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-in-out: var(--ds-ease-snap);
+  --dur-micro: var(--ds-duration-instant);
+  --dur-short: var(--ds-duration-control);
+  --dur-long: var(--ds-duration-reveal);
+  --rule-thin: var(--ds-border-thin);
+  --rule-strong: var(--ds-border-strong);
+  --radius-control: var(--ds-radius-xs);
+  --radius-card: var(--ds-radius-none);
+}
+
+:root[data-theme="light"] {
+  --color-paper: var(--ds-color-paper);
+  --color-paper-2: var(--ds-color-paper-clean);
+  --color-paper-insert: var(--ds-color-ink);
+  --color-paper-clean: var(--ds-color-paper-clean);
+  --color-ink: var(--ds-color-ink);
+  --color-ink-2: #514c45;
+  --color-ink-on-paper: var(--ds-color-ink);
+  --color-rule: rgba(23, 23, 23, 0.42);
+  --color-rule-strong: rgba(23, 23, 23, 0.68);
+  --color-focus: var(--ds-color-carbon);
+  --color-disabled: rgba(23, 23, 23, 0.48);
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --color-paper: var(--ds-color-paper);
+    --color-paper-2: var(--ds-color-paper-clean);
+    --color-paper-insert: var(--ds-color-ink);
+    --color-paper-clean: var(--ds-color-paper-clean);
+    --color-ink: var(--ds-color-ink);
+    --color-ink-2: #514c45;
+    --color-ink-on-paper: var(--ds-color-ink);
+    --color-rule: rgba(23, 23, 23, 0.42);
+    --color-rule-strong: rgba(23, 23, 23, 0.68);
+    --color-focus: var(--ds-color-carbon);
+    --color-disabled: rgba(23, 23, 23, 0.48);
+  }
+}

@@ -1,33 +1,35 @@
 <template>
-  <div class="site-shell">
+  <div class="site-shell ds-shell ds-grain">
     <header class="site-header">
-      <a class="wordmark" href="#top" aria-label="Além das Palavras — início">
-        <span class="wordmark-mark">A</span>
-        <span>Além das Palavras</span>
-      </a>
+      <div class="masthead-meta" aria-hidden="true">
+        <span>Laboratório de leitura política</span>
+        <span>UFPB · PLN · 2026</span>
+      </div>
+      <div class="masthead-main">
+        <button class="icon-button" type="button" :aria-label="themeLabel" :title="themeLabel" @click="cycleTheme">
+          <span aria-hidden="true">{{ themeIcon }}</span>
+        </button>
+        <a class="wordmark" href="#top" aria-label="Além das Palavras — início">
+          <span>Além das Palavras</span>
+        </a>
+        <button class="guide-button" type="button" @click="tourOpen = true">Guia interativo</button>
+      </div>
       <nav aria-label="Navegação principal">
         <a href="#detector">Detector</a>
         <a href="#taxonomia">Técnicas</a>
         <a href="#anotacoes">Anotações</a>
         <a href="#pesquisa">Pesquisa</a>
       </nav>
-      <div class="header-actions">
-        <button class="icon-button" type="button" :aria-label="themeLabel" :title="themeLabel" @click="cycleTheme">
-          <span aria-hidden="true">{{ themeIcon }}</span>
-        </button>
-        <button class="guide-button" type="button" @click="tourOpen = true">Guia interativo</button>
-      </div>
     </header>
 
     <main id="top">
       <section class="hero" data-tour="intro">
         <div class="hero-copy">
           <p class="eyebrow"><span class="live-dot"></span> Modelo de pesquisa · executado localmente</p>
-          <h1>Veja a persuasão<br><em>entre as linhas.</em></h1>
+          <h1>Veja a persuasão<br><span>entre as linhas.</span></h1>
           <p class="hero-lede">Um BERT-Tiny treinado para reconhecer sete técnicas persuasivas em português — sentença por sentença, direto no seu navegador.</p>
           <div class="hero-actions">
             <a class="button primary" href="#detector">Analisar um texto <span aria-hidden="true">↓</span></a>
-            <button class="button secondary" type="button" @click="tourOpen = true">Entender o detector</button>
           </div>
           <ul class="trust-list" aria-label="Características principais">
             <li><span>01</span> Seu texto não é enviado</li>
@@ -36,14 +38,14 @@
           </ul>
         </div>
         <div class="hero-visual" aria-label="Exemplo de sentenças anotadas">
-          <p class="folio">LEITURA / 001</p>
+          <p class="folio">SAÍDA ILUSTRATIVA / 001</p>
           <article class="paper-sample">
-            <span class="margin-note note-one">palavras<br>fortes</span>
+            <p class="sample-label">PALAVRAS FORTES · 94%</p>
             <p>“É um <mark class="mark-coral">absurdo completo</mark> fingir que nada aconteceu.”</p>
-            <span class="margin-note note-two">neutro</span>
+            <p class="sample-label neutral">NEUTRO · 91%</p>
             <p>“O relatório foi publicado <mark class="mark-slate">na terça-feira</mark>.”</p>
             <div class="paper-rule"></div>
-            <small>O modelo identifica padrões linguísticos.<br>Você interpreta o contexto.</small>
+            <small>O modelo aponta padrões. A interpretação continua humana.</small>
           </article>
         </div>
       </section>
@@ -67,11 +69,13 @@
               id="analysis-text"
               v-model="textInput"
               :disabled="busy"
+              :aria-invalid="Boolean(error)"
+              :aria-describedby="error ? 'analysis-error' : 'analysis-help'"
               maxlength="50000"
               placeholder="Cole aqui uma notícia, artigo de opinião ou qualquer texto em português…"
               @input="error = ''"
             ></textarea>
-            <div class="editor-meta" data-tour="segmentation">
+            <div id="analysis-help" class="editor-meta" data-tour="segmentation">
               <span>{{ textInput.length.toLocaleString('pt-BR') }} / 50.000 caracteres</span>
               <span>{{ sentencePreview.length }} {{ sentencePreview.length === 1 ? 'sentença' : 'sentenças' }}</span>
             </div>
@@ -112,7 +116,7 @@
           </aside>
         </div>
 
-        <div v-if="error" class="error-banner" role="alert"><strong>Não foi possível analisar.</strong> {{ error }}</div>
+        <div v-if="error" id="analysis-error" class="error-banner" role="alert"><strong>Não foi possível analisar.</strong> {{ error }}</div>
         <div class="analyze-row" data-tour="analyze">
           <button class="analyze-button" type="button" :disabled="busy || !textInput.trim()" @click="runAnalysis">
             <span v-if="busy" class="spinner" aria-hidden="true"></span>
@@ -140,7 +144,18 @@
           </div>
 
           <div class="view-tabs" role="tablist" aria-label="Visualização dos resultados">
-            <button v-for="tab in tabs" :id="`tab-${tab.id}`" :key="tab.id" role="tab" :aria-selected="activeTab === tab.id" :aria-controls="`panel-${tab.id}`" :class="{ active: activeTab === tab.id }" @click="activeTab = tab.id">{{ tab.label }}</button>
+            <button
+              v-for="(tab, index) in tabs"
+              :id="`tab-${tab.id}`"
+              :key="tab.id"
+              role="tab"
+              :aria-selected="activeTab === tab.id"
+              :aria-controls="`panel-${tab.id}`"
+              :tabindex="activeTab === tab.id ? 0 : -1"
+              :class="{ active: activeTab === tab.id }"
+              @click="activeTab = tab.id"
+              @keydown="onTabKeydown($event, index)"
+            >{{ tab.label }}</button>
           </div>
 
           <div v-if="activeTab === 'annotated'" id="panel-annotated" class="annotated-layout" role="tabpanel" aria-labelledby="tab-annotated">
@@ -246,15 +261,18 @@
 
       <section class="closing-section">
         <p class="eyebrow">A pesquisa se torna tangível</p>
-        <h2>Leia criticamente.<br><em>Inclusive o modelo.</em></h2>
+        <h2>Leia criticamente.<br><span>Inclusive o modelo.</span></h2>
         <a class="button light" href="#detector">Testar outro texto ↑</a>
       </section>
     </main>
 
     <footer>
-      <a class="wordmark" href="#top"><span class="wordmark-mark">A</span><span>Além das Palavras</span></a>
-      <p>Demo experimental · UFPB · Processamento de Linguagem Natural</p>
-      <div><a href="https://github.com/erlonL/pln-demo" target="_blank" rel="noreferrer">Código ↗</a><a href="https://huggingface.co/prajjwal1/bert-tiny" target="_blank" rel="noreferrer">Modelo-base ↗</a></div>
+      <p class="footer-statement">Ler também é desconfiar da ferramenta.</p>
+      <div class="footer-meta">
+        <a class="wordmark" href="#top"><span>Além das Palavras</span></a>
+        <p>Demo experimental · UFPB · Processamento de Linguagem Natural</p>
+        <div><a href="https://github.com/erlonL/pln-demo" target="_blank" rel="noreferrer">Código ↗</a><a href="https://huggingface.co/prajjwal1/bert-tiny" target="_blank" rel="noreferrer">Modelo-base ↗</a></div>
+      </div>
     </footer>
 
     <dialog ref="settingsDialog" class="settings-dialog" @click="closeOnBackdrop">
@@ -335,6 +353,21 @@ const themeLabel = computed(() => `Tema: ${theme.value === 'system' ? 'seguir si
 
 function technique(id: string): Technique { return TECHNIQUE_BY_ID[id] ?? TECHNIQUES[0]! }
 function percent(value: number): string { return `${Math.round(value * 100)}%` }
+function onTabKeydown(event: KeyboardEvent, index: number) {
+  const last = tabs.length - 1
+  let nextIndex = index
+  if (event.key === 'ArrowRight') nextIndex = index === last ? 0 : index + 1
+  else if (event.key === 'ArrowLeft') nextIndex = index === 0 ? last : index - 1
+  else if (event.key === 'Home') nextIndex = 0
+  else if (event.key === 'End') nextIndex = last
+  else return
+
+  event.preventDefault()
+  const nextTab = tabs[nextIndex]
+  if (!nextTab) return
+  activeTab.value = nextTab.id
+  document.getElementById(`tab-${nextTab.id}`)?.focus({ preventScroll: true })
+}
 function loadExample(text: string) { textInput.value = text; results.value = []; error.value = ''; document.querySelector<HTMLTextAreaElement>('#analysis-text')?.focus() }
 async function loadAnnotationExample(text: string) {
   loadExample(text)
@@ -371,6 +404,8 @@ async function confirmClearCache() {
 function applyTheme() {
   document.documentElement.dataset.theme = theme.value
   localStorage.setItem('theme', theme.value)
+  const themeColor = getComputedStyle(document.body).backgroundColor
+  document.querySelector<HTMLMetaElement>('meta[name="theme-color"]')?.setAttribute('content', themeColor)
 }
 function cycleTheme() {
   theme.value = theme.value === 'system' ? 'light' : theme.value === 'light' ? 'dark' : 'system'

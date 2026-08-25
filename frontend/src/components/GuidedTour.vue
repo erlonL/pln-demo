@@ -53,6 +53,12 @@ const card = ref<HTMLElement | null>(null)
 const position = ref<Record<string, string>>({ bottom: '24px', left: '24px' })
 const current = computed(() => steps[stepIndex.value] ?? steps[0]!)
 let activeTarget: HTMLElement | null = null
+let returnFocus: HTMLElement | null = null
+
+function setPageInert(value: boolean) {
+  const shell = document.querySelector<HTMLElement>('.site-shell')
+  if (shell) shell.inert = value
+}
 
 function place() {
   activeTarget?.classList.remove('tour-target')
@@ -78,24 +84,50 @@ function next() {
 function previous() { stepIndex.value = Math.max(0, stepIndex.value - 1) }
 function finish() {
   activeTarget?.classList.remove('tour-target')
+  setPageInert(false)
   emit('update:modelValue', false)
+  queueMicrotask(() => returnFocus?.focus({ preventScroll: true }))
 }
 function onKeydown(event: KeyboardEvent) {
   if (event.key === 'Escape') finish()
   if (event.key === 'ArrowRight') next()
   if (event.key === 'ArrowLeft') previous()
+  if (event.key === 'Tab' && card.value) {
+    const focusable = [...card.value.querySelectorAll<HTMLElement>('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')]
+      .filter((element) => !element.hasAttribute('disabled'))
+    const first = focusable[0]
+    const last = focusable.at(-1)
+    if (!first || !last) return
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault()
+      last.focus()
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault()
+      first.focus()
+    }
+  }
 }
 
-watch([() => props.modelValue, stepIndex], async ([open]) => {
+watch(() => props.modelValue, async (open) => {
   if (!open) return
+  returnFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null
+  setPageInert(true)
   await nextTick()
   place()
   card.value?.focus()
 }, { immediate: true })
 
+watch(stepIndex, async () => {
+  if (!props.modelValue) return
+  await nextTick()
+  place()
+  card.value?.focus()
+})
+
 window.addEventListener('resize', place)
 onBeforeUnmount(() => {
   window.removeEventListener('resize', place)
   activeTarget?.classList.remove('tour-target')
+  setPageInert(false)
 })
 </script>

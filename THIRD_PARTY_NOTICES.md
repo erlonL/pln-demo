@@ -10,4 +10,12 @@ The base checkpoint used by the research is published as `prajjwal1/bert-tiny` u
 
 Transformers.js is Apache-2.0 licensed. ONNX Runtime is MIT licensed. Vue and Vite are MIT licensed.
 
+## Interface typefaces
+
+Barlow Condensed, DM Sans, and DM Mono are bundled through Fontsource packages. Each family is distributed under the SIL Open Font License 1.1; the complete license text remains in the corresponding installed package.
+
+- Barlow Condensed: copyright The Barlow Project Authors
+- DM Sans: copyright The DM Sans Project Authors
+- DM Mono: copyright The DM Mono Project Authors
+
 No repository-wide license is granted by this notice. The fine-tuned checkpoint and application remain without an explicit license unless their owners publish one separately.

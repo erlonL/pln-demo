@@ -19,12 +19,36 @@ test('supports examples, adaptive themes and keyboard tour controls', async ({ p
   await expect(page.locator('#analysis-text')).toHaveValue(/bandido é lixo/)
   await page.getByRole('button', { name: /Tema:/ }).click()
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'light')
-  await page.getByRole('button', { name: 'Guia interativo' }).click()
+  await page.getByRole('button', { name: /Tema:/ }).click()
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark')
+  await page.getByRole('button', { name: /Tema:/ }).click()
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'system')
+  const guideButton = page.getByRole('button', { name: 'Guia interativo' })
+  await guideButton.click()
   await expect(page.getByRole('dialog', { name: /O que este detector faz/ })).toBeVisible()
   await page.keyboard.press('ArrowRight')
   await expect(page.getByRole('dialog', { name: /Comece pelo texto/ })).toBeVisible()
   await page.keyboard.press('Escape')
   await expect(page.getByRole('dialog')).toHaveCount(0)
+  await expect(guideButton).toBeFocused()
+})
+
+test('keeps the editorial navigation usable at the 320px floor', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 800 })
+  await page.goto('./')
+  for (const label of ['Detector', 'Técnicas', 'Anotações', 'Pesquisa']) {
+    await expect(page.getByRole('link', { name: label, exact: true })).toBeVisible()
+  }
+  const layout = await page.evaluate(() => ({
+    viewport: document.documentElement.clientWidth,
+    scrollWidth: document.documentElement.scrollWidth,
+    links: [...document.querySelectorAll<HTMLElement>('.site-header nav a')].map((link) => ({
+      height: link.getBoundingClientRect().height,
+      whiteSpace: getComputedStyle(link).whiteSpace,
+    })),
+  }))
+  expect(layout.scrollWidth).toBe(layout.viewport)
+  expect(layout.links.every((link) => link.height >= 44 && link.whiteSpace === 'nowrap')).toBe(true)
 })
 
 test('segments realistic Portuguese prose before inference', async ({ page }) => {
@@ -77,7 +101,9 @@ test('runs the real model and reuses it offline', async ({ page, context }) => {
   await page.getByRole('button', { name: /Contraste em duas sentenças/ }).click()
   await page.getByRole('button', { name: /Baixar modelo e analisar/ }).click()
   await expect(page.getByRole('heading', { name: 'O que o modelo encontrou' })).toBeVisible({ timeout: 180_000 })
-  await page.getByRole('tab', { name: 'Sentenças' }).click()
+  await page.getByRole('tab', { name: 'Texto anotado' }).focus()
+  await page.keyboard.press('ArrowRight')
+  await expect(page.getByRole('tab', { name: 'Sentenças' })).toHaveAttribute('aria-selected', 'true')
   await expect(page.locator('.sentence-card')).toHaveCount(2)
   const modelCaches = await page.evaluate(async () => {
     const names = (await caches.keys()).filter((name) => name.startsWith('alem-das-palavras:model:'))

@@ -1,0 +1,13 @@
+[
+  {
+    "date": "2026-08-25",
+    "macrostructure": "Workbench",
+    "theme": "Political Print Laboratory",
+    "theme_axes": "dark / display-condensed / warm-red",
+    "enrichment": "none",
+    "nav": "N6 Newspaper Masthead",
+    "footer": "Ft5 Statement",
+    "scope": "app",
+    "brief": "Rework the Portuguese persuasion detector with the supplied political-print design system"
+  }
+]
